@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DatesController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('works/index', [DatesController::class, 'index'])->name('works.index');
+Route::get('works/index', [AttendanceController::class, 'index'])->name('works.index');
+Route::get('works/create',[AttendanceController::class, 'create'])->name('works.create');
