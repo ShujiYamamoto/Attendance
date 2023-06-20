@@ -19,5 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('works/index', [AttendanceController::class, 'index'])->name('works.index');
-Route::get('works/create',[AttendanceController::class, 'create'])->name('works.create');
+
+Route::prefix('works')->name('works')->controller(AttendanceController::class)->group(function() {
+    Route::get('index', 'index')->name('.index');
+    Route::get('create', 'create')->name('.create');
+    Route::post('store', 'store')->name('.store');
+});
