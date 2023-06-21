@@ -27,6 +27,7 @@ class AttendanceController extends Controller
 
     public function create()
     {
-        return view('works.create');
+        $now = Carbon::now()->format('Y-m-d');
+        return view('works.create', compact('now'));
     }
 }
