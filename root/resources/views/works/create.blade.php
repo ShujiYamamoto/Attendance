@@ -13,8 +13,8 @@
     <h1>日報</h1>
 
     {{-- 登録フォーム --}}
-    <form action="{{ route('works.store') }}" method="POST">
-
+    <form action="{{ route('works.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
             <div class="table-container mb-3">
                 <div class="table-row">
                     <div class="table-cell">日付</div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="table-row">
                     {{-- 日付 --}}
-                    <div class="table-cell">{{ $now }}</div>
+                    <div name="date" class="table-cell">{{ $now }}</div>
                     {{-- 出社時間 --}}
                     <div class="table-cell">
                         <div class="cell">
@@ -45,12 +45,12 @@
                     {{-- 退社時間 --}}
                     <div class="table-cell">
                         <div class="cell">
-                            <select name="work_start_time">
+                            <select name="endH">
                                 @for ($hour = 0; $hour < 25; $hour++)
                                     <option value="{{$hour}}">{{$hour}}時</option>
                                 @endfor
                             </select>
-                            <select name="work_end_time">
+                            <select name="endM">
                                 @for ($minute = 0; $minute < 61; $minute+=15)
                                     <option value="{{$minute}}">{{$minute}}分</option>
                                 @endfor
@@ -69,7 +69,7 @@
                     </div>
                     {{-- 備考 --}}
                     <div class="table-cell">
-                        <textarea name="work_comment" cols="20" rows="1" placeholder="業務内容"></textarea>
+                        <textarea name="work_content" cols="20" rows="1" placeholder="業務内容"></textarea>
                     </div>
                     {{-- 備考 --}}
                     <div class="table-cell">
