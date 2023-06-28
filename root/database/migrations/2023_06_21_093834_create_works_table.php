@@ -15,11 +15,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('works', function (Blueprint $table) {
-            $table->bigInteger('id')->autoIncrement()->comment('ID');
-            $table->bigInteger('user_id')->unique()->comment('ユーザーID');
+            $table->id()->comment('ID');
+            $table->integer('user_id')->comment('ユーザーID');
             $table->char('work_content', 255)->comment('業務内容');
             $table->char('comment', 255)->nullable()->comment('総務コメント');
-            $table->date('date')->unique()->comment('日付');
+            $table->date('date')->comment('日付');
             $table->time('work_start_time')->useCurrent()->comment('出勤時間');
             $table->time('work_end_time')->useCurrent()->comment('退勤時間');
             $table->time('break_time')->nullable()->default('01:00')->comment('休憩時間');
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
             $table->timestamp('deleted_at')->comment('論理削除');
+            $table->unique(['user_id', 'date']);
         });
     }
 

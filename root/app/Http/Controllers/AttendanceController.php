@@ -15,7 +15,7 @@ class AttendanceController extends Controller
         (int)$year = 2023;
         (int)$month = 6;
         $day = 1;
-        $value = Carbon::now();
+        $now = Carbon::now();
         $days = new Carbon($year.'-'.$month.'-'.$day);
         $number = $days->daysInMonth;
 
@@ -23,7 +23,7 @@ class AttendanceController extends Controller
             $dates[] = new Carbon($year.'-'.$month.'-'.$day);
         }
 
-        return view('works.index', compact('dates','week'));
+        return view('works.index', compact('dates','week','now'));
     }
 
     public function create()
@@ -32,21 +32,21 @@ class AttendanceController extends Controller
         return view('works.create', compact('now'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $work = new Work();
-        // $work->id = 2;
-        $work->user_id = 2;
-        $work->work_content = 'テスト';
-        $work->comment = 'テスト';
-        $work->date = '2023-06-21';
-        $work->work_start_time = 8;
-        $work->work_end_time = 18;
-        $work->break_time = 1;
+        $work->user_id = 4;
+        $work->work_content = $request->work_content;
+        $work->comment = $request->comment;
+        $work->date = $request->date;
+        $work->work_start_time = "$request->startH:$request->startM:00";
+        $work->work_end_time = "$request->endH:$request->endM:00";
+        $work->break_time = "$request->breakH:$request->breakM:00";
         $work->status_id = 1;
         $work->deleted_at = Carbon::now();
         $work->save();
 
-        return view('works.index');
+        return redirect()->route('works.create')
+                ->with('message', '登録が完了しました。');
     }
 }

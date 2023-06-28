@@ -11,7 +11,9 @@
 <body>
 <div class="container">
     <h1>日報</h1>
-
+    @if (session('message'))
+        {{session('message')}}
+    @endif
     {{-- 登録フォーム --}}
     <form action="{{ route('works.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -26,7 +28,9 @@
                 </div>
                 <div class="table-row">
                     {{-- 日付 --}}
-                    <div name="date" class="table-cell">{{ $now }}</div>
+                    <div class="table-cell">
+                        <input type="date" name="date" id="date" value="{{ $now }}">
+                    </div>
                     {{-- 出社時間 --}}
                     <div class="table-cell">
                         <div class="cell">
@@ -36,7 +40,7 @@
                                 @endfor
                             </select>
                             <select name="startM">
-                                @for ($minute = 0; $minute < 61; $minute+=15)
+                                @for ($minute = 0; $minute < 46; $minute+=15)
                                     <option value="{{$minute}}">{{$minute}}分</option>
                                 @endfor
                             </select>
@@ -51,7 +55,7 @@
                                 @endfor
                             </select>
                             <select name="endM">
-                                @for ($minute = 0; $minute < 61; $minute+=15)
+                                @for ($minute = 0; $minute < 46; $minute+=15)
                                     <option value="{{$minute}}">{{$minute}}分</option>
                                 @endfor
                             </select>
@@ -60,14 +64,19 @@
                     {{-- 休憩時間 --}}
                     <div class="table-cell">
                         <div class="cell">
-                            <select name="break_time">
-                                @for ($minute = 0; $minute < 61; $minute+=15)
+                            <select name="breakH">
+                                @for ($hour = 0; $hour < 11; $hour++)
+                                    <option value="{{$hour}}">{{$hour}}時</option>
+                                @endfor
+                            </select>
+                            <select name="breakM">
+                                @for ($minute = 0; $minute < 46; $minute+=15)
                                     <option value="{{$minute}}">{{$minute}}分</option>
                                 @endfor
                             </select>
                         </div>
                     </div>
-                    {{-- 備考 --}}
+                    {{-- 業務内容 --}}
                     <div class="table-cell">
                         <textarea name="work_content" cols="20" rows="1" placeholder="業務内容"></textarea>
                     </div>
@@ -79,7 +88,7 @@
             </div>
         <button class="btn btn-primary mb-3" type="submit">登録</button>
     </form>
-    <a class="btn btn-primary" href="/works/index">戻る</a>
+    <a class="btn btn-primary" href="/works">戻る</a>
 </div>
 
 </body>
