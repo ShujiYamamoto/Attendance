@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 
 Route::prefix('works')->name('works')->controller(AttendanceController::class)->group(function() {
-    Route::get('index', 'index')->name('.index');
+    Route::get('/', 'index')->name('.index');
     Route::get('create', 'create')->name('.create');
     Route::post('store', 'store')->name('.store');
 });
